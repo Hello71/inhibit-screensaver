@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
@@ -22,11 +23,14 @@ int main() {
 
         // works even if process dies!
         kill(getpid(), SIGKILL);
+
+        // otherwise, release the inhibition:
+        close(pipefd[1]);
     } else {
         close(pipefd[1]);
-        close(0);
         dup2(pipefd[0], 0);
         execl("./inhibit-screensaver", "./inhibit-screensaver", "c-inhibitor-example", "testing", (char *)NULL);
+        perror("exec inhibit-screensaver");
         exit(1);
     }
 }
