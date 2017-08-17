@@ -1,0 +1,9 @@
+This is an implementation of a standalone pipe-based command-line inhibitor
+based on the VLC D-Bus inhibitor.
+
+Instead of using the D-Bus unregistration to guarantee uninhibition, this uses
+a pipe which is automatically closed when the holder exits. Thus, the caller
+application can be written without using D-Bus support (preferable in certain
+cases).
+
+Examples in bash, POSIX sh, and C are provided.
